@@ -4,7 +4,6 @@ class BuisnessService extends cds.ApplicationService {
     async init(){
         const bp = await cds.connect.to('API_BUSINESS_PARTNER');
         const nw = await cds.connect.to('northwind');
-        const cdd = await cds.connect.to('student');
 
 
         this.on('READ','A_BuisnessPartner',async req=>{
@@ -15,9 +14,26 @@ class BuisnessService extends cds.ApplicationService {
             return nw.run(req.query);
         })
 
+         this.on('READ','localData',async req=>{
+            const empdata = await cds.connect.to('employeedata');
+            return empdata.run(req.query);
+        })
+
 
          this.on('READ','studentdata',async req=>{
-            return await cdd.run(req.query);
+            const cdd = await cds.connect.to('student');
+            const data = await cdd.run(req.query);
+            
+            // await cdd.send({
+            //     method: 'GET',
+            //     path: '/student',
+            //     headers :{
+            //         'Content-Type': 'application/json',
+            //         "accept": "application/json",
+            //         "X-Requested-With": "XMLHttpRequest"
+            //     }
+            // })
+            return data;
         })
 
 

@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "dependencies": {
-    "@sap/cds": "^9",
-    "express": "^4",
+    "@cap-js/hana": "^2.7.0",
     "@sap-cloud-sdk/connectivity": "^4",
     "@sap-cloud-sdk/http-client": "^4",
-    "@sap-cloud-sdk/resilience": "^4"
+    "@sap-cloud-sdk/resilience": "^4",
+    "@sap/cds": "^9",
+    "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^2"
+    "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9"
   },
   "scripts": {
     "start": "cds-serve"
@@ -18,6 +20,12 @@
   "private": true,
   "cds": {
     "requires": {
+      "auth": {
+        "kind": "mocked"
+      },
+      "server": {
+        "index": true
+      },
       "API_BUSINESS_PARTNER": {
         "kind": "odata-v2",
         "model": "srv/external/API_BUSINESS_PARTNER",
@@ -37,15 +45,19 @@
       },
       "employeedata": {
         "kind": "odata",
-        "model": "srv/external/employeedata"
+        "model": "srv/external/employeedata",
+        "credentials": {
+          "path": "/odata/v4/employee",
+          "destination": "empmanagement-destination-dest",
+          "requestTimeout": 30000000
+        }
       },
       "student": {
         "kind": "odata",
-        "model": "srv/external/student",
         "credentials": {
-          "path": "/employee",
+          "path": "/odata/v4/student",
           "destination": "services-dst-Destination",
-          "requestTimeout": 3000000
+          "requestTimeout": 30000000
         }
       }
     }
