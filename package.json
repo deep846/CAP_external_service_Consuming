@@ -8,7 +8,8 @@
     "@sap-cloud-sdk/http-client": "^4",
     "@sap-cloud-sdk/resilience": "^4",
     "@sap/cds": "^9",
-    "express": "^4"
+    "express": "^4",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
@@ -20,9 +21,6 @@
   "private": true,
   "cds": {
     "requires": {
-      "auth": {
-        "kind": "mocked"
-      },
       "server": {
         "index": true
       },
@@ -47,7 +45,6 @@
         "kind": "odata",
         "model": "srv/external/employeedata",
         "credentials": {
-          "path": "/odata/v4/employee",
           "destination": "empmanagement-destination-dest",
           "requestTimeout": 30000000
         }
@@ -58,6 +55,11 @@
           "path": "/odata/v4/student",
           "destination": "services-dst-Destination",
           "requestTimeout": 30000000
+        }
+      },
+      "[production]": {
+        "auth": {
+          "kind": "xsuaa"
         }
       }
     }

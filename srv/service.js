@@ -16,7 +16,17 @@ class BuisnessService extends cds.ApplicationService {
 
          this.on('READ','localData',async req=>{
             const empdata = await cds.connect.to('employeedata');
-            return empdata.run(req.query);
+            const data = empdata.run(req.query);
+            // const data = await empdata.send({
+            //     method: 'GET',
+            //     path: '/Employee',
+            //     headers :{
+            //         'Content-Type': 'application/json',
+            //         "accept": "application/json",
+            //         "X-Requested-With": "XMLHttpRequest"
+            //     }
+            // })
+            return data;
         })
 
 

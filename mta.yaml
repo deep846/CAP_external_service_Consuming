@@ -26,6 +26,7 @@ modules:
     requires:
       - name: externalServicesConnections-db
       - name: externalServicesConnections-destination
+      - name: externalServicesConnections-auth
 
   - name: externalServicesConnections-db-deployer
     type: hdb
@@ -46,3 +47,16 @@ resources:
     parameters:
       service: destination
       service-plan: lite
+  - name: externalServicesConnections-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: externalServicesConnections-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
