@@ -27,6 +27,9 @@ modules:
       - name: externalServicesConnections-db
       - name: externalServicesConnections-destination
       - name: externalServicesConnections-auth
+      - name: externalServicesConnections-autoscaler
+        parameters:
+          path: "./policy.json"
 
   - name: externalServicesConnections-db-deployer
     type: hdb
@@ -60,3 +63,8 @@ resources:
           credential-types:
             - "binding-secret"
             - "x509"
+  - name: externalServicesConnections-autoscaler
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: autoscaler
+      service-plan: standard
