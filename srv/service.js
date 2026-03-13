@@ -45,9 +45,6 @@ class BuisnessService extends cds.ApplicationService {
             // })
             return data;
         })
-
-
-// added some comment for server cicd check
         
 
         return super.init();
